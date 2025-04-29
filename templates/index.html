@@ -51,11 +51,11 @@
             <div class="row">
                 <!-- Query Input Section -->
                 <div class="col-md-8 mx-auto mb-4">
-                    <form method="post" action="{{url_for('hello')}}">
+                    <form method="post" action="{{url_for('execute_prompt')}}">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Enter Your Query</h5>
-                                <textarea class="form-control mb-3" id="name" name="name" rows="3" placeholder="Type or select a query..."></textarea>
+                                <textarea class="form-control mb-3" id="prompt" name="prompt" rows="3" placeholder="Type or select a query..."></textarea>
                                 <button type="submit" class="btn btn-primary">Submit Query</button>
                             </div>
                         </div>

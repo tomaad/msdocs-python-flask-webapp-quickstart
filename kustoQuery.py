@@ -1,10 +1,11 @@
 import json
+import pandas as pd
 from dataclasses import dataclass
 
 from azure.kusto.data import KustoClient
 from azure.kusto.data.exceptions import KustoServiceError
 from azure.kusto.data.helpers import dataframe_from_result_table
-from utils import AuthenticationModeOptions, Utils
+from apis import AuthenticationModeOptions, Utils
 
 @dataclass
 class ConfigJson:
@@ -47,28 +48,15 @@ class KustoQueryApp:
             Utils.error_handler(f"Couldn't read config file '{config_file_name}'", ex)
 
     @classmethod
-    def query_table(cls, kusto_client: KustoClient, database_name: str, table_name: str) -> None:
+    def query_table(cls, kusto_client: KustoClient, database_name: str, table_name: str, command: str) -> pd.DataFrame:
         """
         Execute queries on the Kusto table.
         :param kusto_client: Client to run queries
         :param database_name: DB Name
         :param table_name: Table Name
         """
+        df = pd.DataFrame()
         try:
-            escaped_table = f"['{table_name}']"
-            
-            # Get row count
-            # cls.wait_for_user_to_proceed(f"Get row count for '{database_name}.{table_name}':")
-            command = f"{escaped_table} | count"
-            print(f"Executing command: {command}")
-            response = kusto_client.execute_query(database_name, command)
-            if response and response.primary_results:
-                count = response.primary_results[0][0][0]
-                print(f"Row count: {count}")
-
-            # Get sample rows
-            # cls.wait_for_user_to_proceed(f"Get first two rows from '{database_name}.{table_name}':")
-            command = f"{escaped_table} | take 2"
             print(f"Executing command: {command}")
             response = kusto_client.execute_query(database_name, command)
             if response and response.primary_results:
@@ -84,6 +72,7 @@ class KustoQueryApp:
             print(f"Error: {ex}")
             print(f"Failed command: {command}")
             raise ex
+        return df
 
     @classmethod
     def wait_for_user_to_proceed(cls, prompt_msg: str) -> None:
