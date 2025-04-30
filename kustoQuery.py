@@ -40,6 +40,7 @@ class KustoQueryApp:
         Loads JSON configuration file.
         :param config_file_name: Configuration file path.
         """
+        print('loading config file: {}'.format(config_file_name))
         try:
             with open(config_file_name, "r") as config_file:
                 json_dict = json.load(config_file)
@@ -61,8 +62,6 @@ class KustoQueryApp:
             response = kusto_client.execute_query(database_name, command)
             if response and response.primary_results:
                 df = dataframe_from_result_table(response.primary_results[0])
-                print("\nSample rows:")
-                print(df)
 
         except KustoServiceError as ke:
             print(f"Kusto Service Error: {ke}")

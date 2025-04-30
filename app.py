@@ -2,6 +2,8 @@ import os
 import kustoQuery
 import apis
 from azure.kusto.data import KustoClient
+import insights
+import markdown
 
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
@@ -11,7 +13,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-   print('Request for index page received')
+   print('Request received from the index page')
    return render_template('index.html')
 
 @app.route('/favicon.ico')
@@ -24,30 +26,45 @@ def execute_prompt():
    user_input = request.form.get('prompt')
 
    if user_input:
-        print('Prompt=%s' % user_input)
-        response = apis.call_openai(apis.system_prompt, user_input)
-        # Printing the result
-        print(response)
-        # print("Kusto Query App is starting...")
-
+        print('Received Prompt from User:')
+        print(user_input)
+        print('Calling OpenAI API to generate Kusto Query...')
+        kql = apis.call_openai(apis.system_prompt, user_input)
+        print('Received KQL in response from OpenAI API:')
+        print(kql)
+        print("Kusto Query App is starting...")
         app = kustoQuery.KustoQueryApp()
         app.load_configs(app.CONFIG_FILE_NAME)
 
         # if app.config.authentication_mode == "UserPrompt":
         #     app.wait_for_user_to_proceed("You will be prompted for credentials during this script. Please return to the console after authenticating.")
-
+        print('Generating Kusto database connection string using authentication mode: %s' % app.config.authentication_mode)
         kusto_connection_string = apis.Utils.Authentication.generate_connection_string(app.config.kusto_uri, app.config.authentication_mode)
-        print(f"Using cluster URI: {app.config.kusto_uri}")
+        print(f"ADX cluster URI: {app.config.kusto_uri}")
 
         if not kusto_connection_string:
             apis.Utils.error_handler("Connection String error. Please validate your configuration file.")
+            return redirect(url_for('index'))
         else:
             with KustoClient(kusto_connection_string) as kusto_client:
-                df = app.query_table(kusto_client, app.config.database_name, app.config.table_name, response)
+                df = app.query_table(kusto_client, app.config.database_name, app.config.table_name, kql)
+        
+        print('RESULT_SET received in response from the OpenAI API:')
 
-        print("\nKusto Query App done")
+        print(df.to_markdown())
 
-        return render_template('response.html', output = df.to_string(index=False))
+        print("KQL run successfully, now generating insights...")
+
+        insights_prompt_str = insights.insights_prompt.format(user_input=user_input, df_markdown=df.to_markdown())
+        print('Insights Prompt to OpenAI API:')
+        print(insights_prompt_str)
+        print('Calling OpenAI API to generate insights...')
+        insights_response = apis.call_openai(insights_prompt_str, user_input)
+        print('Received insights in response from OpenAI API:')
+        print(insights_response)
+        print('Rendering insights in HTML...')
+        markdown_output = markdown.markdown(insights_response)
+        return render_template('response.html', output = markdown_output)
    else:
         print('Request received without any prompt from the user or blank prompt -- redirecting')
         return redirect(url_for('index'))

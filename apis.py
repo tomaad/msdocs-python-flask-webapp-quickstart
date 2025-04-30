@@ -364,7 +364,6 @@ def call_openai(system_message: str, user_message: str) -> str:
     response = client.chat.completions.create(
         model=OPENAI_DEPLOYMENT_NAME,
         messages=messages
-        
     )
     
     kusto_query = response.choices[0].message.content
