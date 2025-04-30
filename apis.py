@@ -3,14 +3,11 @@ import uuid
 from azure.kusto.data import KustoConnectionStringBuilder, ClientRequestProperties, KustoClient
 from azure.kusto.data.exceptions import KustoClientError, KustoServiceError
 import os
-import utils
-import pandas as pd
 from openai import AzureOpenAI
-import json
 
 # Defining constants
 OPENAI_DEPLOYMENT_ENDPOINT = "https://azureopenaiforstore-events.openai.azure.com/"
-OPENAI_DEPLOYMENT_NAME = "o3-mini"
+OPENAI_DEPLOYMENT_NAME = "gpt-4"
 API_VERSION = "2025-01-01-preview"
 
 # Initialize Azure OpenAI client

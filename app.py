@@ -2,8 +2,6 @@ import os
 import kustoQuery
 import apis
 from azure.kusto.data import KustoClient
-from azure.kusto.data.exceptions import KustoServiceError
-from azure.kusto.data.helpers import dataframe_from_result_table
 
 from flask import (Flask, redirect, render_template, request,
                    send_from_directory, url_for)
