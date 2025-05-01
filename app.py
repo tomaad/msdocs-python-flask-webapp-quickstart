@@ -53,6 +53,9 @@ def execute_prompt():
 
         print(df.to_markdown())
 
+        # Convert the dataframe to an HTML table
+        df_html_table = df.to_html(classes='table table-striped table-bordered')
+
         print("KQL run successfully, now generating insights...")
 
         insights_prompt_str = insights.insights_prompt.format(user_input=user_input, df_markdown=df.to_markdown())
@@ -64,7 +67,11 @@ def execute_prompt():
         print(insights_response)
         print('Rendering insights in HTML...')
         markdown_output = markdown.markdown(insights_response)
-        return render_template('response.html', output = markdown_output)
+        return render_template('response.html',
+                               user_prompt = user_input,
+                               kql_query = kql,
+                               kql_response = df_html_table,
+                               insights = markdown_output)
    else:
         print('Request received without any prompt from the user or blank prompt -- redirecting')
         return redirect(url_for('index'))

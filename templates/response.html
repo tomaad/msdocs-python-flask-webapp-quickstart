@@ -37,40 +37,42 @@
 <html>
    <body data-bs-theme="light">
      <main>
-        <div class="container py-4">
-            <button class="btn btn-outline-secondary theme-toggle" onclick="toggleTheme()">
-                <svg id="theme-icon" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
-                </svg>
-            </button>
-            
+        <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-md-10 mx-auto">
+                <div class="col-12">
+                    <div class="d-flex justify-content-end mb-3">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary px-4">New Query</a>
+                    </div>
                     <div class="card mb-4">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="card-title mb-0">Response</h5>
+                            <h5 class="card-title mb-0">User Prompt and Insights</h5>
                         </div>
                         <div class="card-body">
-                            {{output|safe}}
+                            <h6 class="text-secondary">User Prompt:</h6>
+                            <pre class="bg-light p-3 border rounded" style="white-space: pre-wrap; word-wrap: break-word;">{{ user_prompt|safe }}</pre>
+                            <h6 class="text-secondary mt-4">Insights:</h6>
+                            <pre class="bg-light p-3 border rounded" style="white-space: pre-wrap; word-wrap: break-word;">{{ insights|safe }}</pre>
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Results</h5>
+                    <div class="card mb-4">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="card-title mb-0">Result Set</h5>
                         </div>
                         <div class="card-body">
-                            <p class="card-text text-muted">
-                                This is a demo interface. In a real application, this would display actual analytics results based on your query.
-                            </p>
-                            <div class="alert alert-info">
-                                Sample visualization or data would appear here based on the query type and results.
+                            <div class="table-responsive">
+                                {{ kql_response|safe }}
                             </div>
                         </div>
                     </div>
 
-                    <div class="text-center mt-4">
-                        <a href="{{ url_for('index') }}" class="btn btn-primary px-4">New Query</a>
+                    <div class="card mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="card-title mb-0">KQL Query</h5>
+                        </div>
+                        <div class="card-body">
+                            <pre class="bg-light p-3 border rounded" style="white-space: pre-wrap; word-wrap: break-word;">{{ kql_query|safe }}</pre>
+                        </div>
                     </div>
                 </div>
             </div>

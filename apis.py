@@ -42,7 +42,7 @@ KQL Query Generation:
 1. Generate the corresponding accurate KQL query using the table and fields provided.
 2. Use the table name ['events.all'] as the source table.
 3. Filter based on FullName_Name field to identify event types like purchase_initiated, purchase_ended, and product_page_viewed.
-4. When generating aggregation fields (such as counts of page views), use the name product_views instead of views to avoid using reserved keywords.
+4. When generating aggregation fields (such as counts of page views), use the name "product_views" instead of "views" to avoid using reserved keywords.
 5. Do not include escape characters (\\) in the query. Use normal double quotes (") for string literals.
     Example: use where FullName_Name == "product_page_viewed" instead of where FullName_Name == \"product_page_viewed\".
 
