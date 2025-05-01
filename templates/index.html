@@ -69,7 +69,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Show me the top 10 purchase failure reasons in the last 2 weeks</p>
+                                    <p class="card-text small mb-2">Show me the number of product page views by market over the last 7 days.</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">List the most common customer complaints from high-value transactions</p>
+                                    <p class="card-text small mb-2">Show me the trend of product views by market over the last 7 days</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">What are the trending products in our electronics category?</p>
+                                    <p class="card-text small mb-2">How many users viewed multiple products before making a purchase in the last 24 hours?</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Display the average order processing time by region</p>
+                                    <p class="card-text small mb-2">Show me the Daily Purchase Volume (Initiated vs. Ended)</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Identify customers who abandoned their cart with items over $100</p>
+                                    <p class="card-text small mb-2">What are the top Purchased Products by successful purchases over the last 7 days?</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Show me conversion rates for different marketing campaigns</p>
+                                    <p class="card-text small mb-2">Show me the Purchase Funnel Conversion from Initiated to Ended purchase state</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -117,31 +117,7 @@
                         <div class="col">
                             <div class="card h-100">
                                 <div class="card-body py-2">
-                                    <p class="card-text small mb-2">What's the distribution of customer ratings this month?</p>
-                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body py-2">
-                                    <p class="card-text small mb-2">List products with unusual return patterns</p>
-                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Show me peak transaction hours in different time zones</p>
-                                    <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body py-2">
-                                    <p class="card-text small mb-2">Identify payment methods with highest decline rates</p>
+                                    <p class="card-text small mb-2">What are the Top Viewed Products Not Purchased in the last 24 hours?</p>
                                     <button class="btn btn-outline-primary btn-sm copy-prompt">Use This Query</button>
                                 </div>
                             </div>
@@ -158,9 +134,9 @@
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const queryText = this.previousElementSibling.textContent;
-                document.getElementById('name').value = queryText;
+                document.getElementById('prompt').value = queryText;
                 // Scroll to the textarea
-                document.getElementById('name').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('prompt').scrollIntoView({ behavior: 'smooth' });
             });
         });
 
